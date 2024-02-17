@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "87q19XEt3aV69xdn+tgVFv4NwVyGIOUIQW2dLaos0j43mEP4cKPqqZULyk3qWhHHBjb5E+KJ8MZeg4aBlBNdEQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Oksana\\Desktop\\KodeTestCopy\\Application\\Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Oksana\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\Oksana\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

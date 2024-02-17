@@ -1,0 +1,34 @@
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\bin\Debug\net6.0\LogComponent.deps.json
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\bin\Debug\net6.0\LogComponent.dll
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\bin\Debug\net6.0\LogComponent.pdb
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.csproj.AssemblyReference.cache
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.AssemblyInfoInputs.cache
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.AssemblyInfo.cs
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.csproj.CoreCompileInputs.cache
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.dll
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\refint\LogComponent.dll
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\LogComponent.pdb
+C:\Users\ssy\OneDrive - Kamstrup A S\Desktop\KodeTest\LogComponent\obj\Debug\net6.0\ref\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\bin\Debug\net6.0\LogComponent.deps.json
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\bin\Debug\net6.0\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\bin\Debug\net6.0\LogComponent.pdb
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\LogComponent.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\LogComponent.AssemblyInfoInputs.cache
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\LogComponent.AssemblyInfo.cs
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\LogComponent.csproj.CoreCompileInputs.cache
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\refint\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\LogComponent.pdb
+C:\Users\Oksana\Desktop\KodeTest\KodeTest org\KodeTest org\LogComponent\obj\Debug\net6.0\ref\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\bin\Debug\net6.0\LogComponent.deps.json
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\bin\Debug\net6.0\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\bin\Debug\net6.0\LogComponent.pdb
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.AssemblyInfoInputs.cache
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.AssemblyInfo.cs
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.csproj.CoreCompileInputs.cache
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\refint\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.pdb
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\ref\LogComponent.dll
