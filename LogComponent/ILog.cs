@@ -17,7 +17,5 @@
         /// </summary>
         /// <param name="text">The text to written to the log</param>
         void Write(string text);
-
-
     }
 }

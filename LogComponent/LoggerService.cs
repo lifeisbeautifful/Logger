@@ -25,7 +25,7 @@ namespace LogComponent
             
         }
 
-        public void StopLogging(bool withFlush)
+        public void StopLoggingWithFlush(bool withFlush)
         {
             if (withFlush)
             {

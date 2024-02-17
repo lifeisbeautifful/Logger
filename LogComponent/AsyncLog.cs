@@ -37,73 +37,79 @@ namespace LogComponent
 
         private void MainLoop()
         {
-            while (!this._exit)
+            try
             {
-                if (this._lines.Count > 0)
+                while (!this._exit)
                 {
-                    int f = 0;
-                    List<LogLine> _handled = new List<LogLine>();
-                    lock (_lines)
+                    if (this._lines.Count > 0)
                     {
-                        foreach (LogLine logLine in this._lines)
+                        int f = 0;
+                        List<LogLine> _handled = new List<LogLine>();
+                        lock (_lines)
                         {
-                            f++;
-
-                            if (f > 5)
-                                continue;
-
-                            if (!this._exit || this._QuitWithFlush)
+                            foreach (LogLine logLine in this._lines)
                             {
-                                _handled.Add(logLine);
+                                f++;
 
-                                StringBuilder stringBuilder = new StringBuilder();
+                                if (f > 5)
+                                    continue;
 
-                                if ((DateTime.Now - _curDate).Days != 0)
+                                if (!this._exit || this._QuitWithFlush)
                                 {
-                                    _curDate = DateTime.Now;
 
-                                    this._writer = File.AppendText(@"C:\LogTest\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
+                                    _handled.Add(logLine);
 
-                                    this._writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
+                                    StringBuilder stringBuilder = new StringBuilder();
+
+                                    if ((DateTime.Now - _curDate).Days != 0)
+                                    {
+                                        _curDate = DateTime.Now;
+
+                                        this._writer = File.AppendText(@"C:\LogTest\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
+
+                                        this._writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
+
+                                        stringBuilder.Append(Environment.NewLine);
+
+                                        this._writer.Write(stringBuilder.ToString());
+
+                                        this._writer.AutoFlush = true;
+                                    }
+
+                                    stringBuilder.Append(logLine.Timestamp.ToString("yyyy-MM-dd HH:mm:ss:fff"));
+                                    stringBuilder.Append("\t");
+                                    stringBuilder.Append(logLine.LineText());
+                                    stringBuilder.Append("\t");
 
                                     stringBuilder.Append(Environment.NewLine);
 
                                     this._writer.Write(stringBuilder.ToString());
 
-                                    this._writer.AutoFlush = true;
                                 }
-
-                                stringBuilder.Append(logLine.Timestamp.ToString("yyyy-MM-dd HH:mm:ss:fff"));
-                                stringBuilder.Append("\t");
-                                stringBuilder.Append(logLine.LineText());
-                                stringBuilder.Append("\t");
-
-                                stringBuilder.Append(Environment.NewLine);
-
-                                this._writer.Write(stringBuilder.ToString());
-
                             }
                         }
-                    }
-                    
 
-                    for (int y = 0; y < _handled.Count; y++)
-                    {
+
+                        for (int y = 0; y < _handled.Count; y++)
+                        {
+                            lock (_lines)
+                            {
+                                this._lines.Remove(_handled[y]);
+                            }
+                        }
+
                         lock (_lines)
                         {
-                            this._lines.Remove(_handled[y]);
+                            if (this._QuitWithFlush == true && this._lines.Count == 0)
+                                this._exit = true;
                         }
-                    }
 
-                    lock (_lines)
-                    {
-                        if (this._QuitWithFlush == true && this._lines.Count == 0)
-                            this._exit = true;
+                        Thread.Sleep(50);
                     }
-                    
-                    Thread.Sleep(50);
                 }
             }
+
+            catch (Exception) { }
         }
 
         public void StopWithoutFlush()
@@ -118,9 +124,9 @@ namespace LogComponent
 
         public void Write(string text)
         {
-            lock (_lines)
-            {
-                this._lines.Add(new LogLine() { Text = text, Timestamp = DateTime.Now });
+            lock (_lines) 
+            { 
+                this._lines.Add(new LogLine() { Text = text, Timestamp = DateTime.Now }); 
             }
         }
     }

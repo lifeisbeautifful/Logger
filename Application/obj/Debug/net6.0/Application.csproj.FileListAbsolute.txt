@@ -54,3 +54,4 @@ C:\Users\Oksana\Desktop\KodeTestCopy\Application\obj\Debug\net6.0\Application.ge
 C:\Users\Oksana\Desktop\KodeTestCopy\Application\obj\Debug\net6.0\ref\LogUsers.dll
 C:\Users\Oksana\Desktop\KodeTestCopy\Application\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Oksana\Desktop\KodeTestCopy\Application\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Oksana\Desktop\KodeTestCopy\Application\obj\Debug\net6.0\Application.sourcelink.json

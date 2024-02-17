@@ -32,3 +32,4 @@ C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.
 C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\refint\LogComponent.dll
 C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.pdb
 C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\ref\LogComponent.dll
+C:\Users\Oksana\Desktop\KodeTestCopy\LogComponent\obj\Debug\net6.0\LogComponent.sourcelink.json

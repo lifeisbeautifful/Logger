@@ -9,6 +9,7 @@ namespace LogComponent
     public interface ILoggerService
     {
         void AddLogLines(string message, int count);
+        void StopLoggingWithFlush(bool withFlush);
     }
     
 
