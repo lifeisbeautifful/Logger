@@ -1,27 +1,37 @@
-﻿using LogComponent;
+﻿using LogComponent.Abstract;
+using LogComponent.Implementation;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace LogUsers
 {
-    using System.Threading;
-
+  
     class Program
     {
         static void Main(string[] args)
         {
+
+            var asyncLogForIncreaseLoop = new AsyncLoggerCreator().CreateLogger();
+            asyncLogForIncreaseLoop.StartLogging();
+
+
+            //Satisfy demands 1: execute write call asynchroniously,
+            //so application can get on with its work without waiting for the log to be written to a file.
+            ThreadPool.QueueUserWorkItem(item => asyncLogForIncreaseLoop.AddLinesIncreaseCount("Number with Flush: "));
+
             
-            var loggerService = new LoggerService(new AsyncLog());
-            Console.WriteLine("Before que");
+            var asyncLogForDecreaseLoop = new AsyncLoggerCreator().CreateLogger();
+            asyncLogForDecreaseLoop.StartLogging();
 
-            ThreadPool.QueueUserWorkItem(new WaitCallback(item => loggerService.AddLogLines("Number with Flush: ", 150)));
-            Console.WriteLine("After que");
+            // Satisfy demands 1: execute write call asynchroniously, use if we
+            //don`t need to start logging immediately.
+            var startLog = new Task(() => asyncLogForDecreaseLoop.AddLinesDecreaseCount("Number with No flush: "));
+            startLog.Start();
 
-            var loggerService2 = new LoggerService(new AsyncLog());
-            ThreadPool.QueueUserWorkItem(new WaitCallback(item => loggerService2.AddLogLines("Number without Flush: ", 150)));
 
             Thread.Sleep(1000);
-            loggerService.StopLoggingWithFlush(true);
-            loggerService2.StopLoggingWithFlush(false);
-
+            asyncLogForIncreaseLoop.StopWithoutFlush();
+            asyncLogForDecreaseLoop.StopWithFlush();
             Console.ReadLine();
         }
     }
