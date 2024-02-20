@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using LogComponent.Abstract;
 
+
 namespace LogComponent.Implementation
 {
     public class AsyncLog : ILog
@@ -15,22 +16,31 @@ namespace LogComponent.Implementation
 
         private bool _QuitWithFlush = false;
 
-        private DateTime _curDate = DateTime.Now;
+        private DateTime _curDate;
 
-        public AsyncLog()
+        private DateProvider _dateProvider;
+
+        private readonly string dirPath = @"C:\LogTest";
+
+
+        public AsyncLog(DateProvider provider)
         {
-            if (!Directory.Exists(@"C:\LogTest"))
-                Directory.CreateDirectory(@"C:\LogTest");
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
 
-            _writer = File.AppendText(@"C:\LogTest\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
+            _dateProvider = provider;
+
+            _curDate = _dateProvider.Now;
+
+            _writer = File.AppendText(dirPath + @"\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
 
             _writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
 
             _writer.AutoFlush = true;
+
         }
 
        
-
         private void Log()
         {
             while (!_exit)
@@ -58,17 +68,16 @@ namespace LogComponent.Implementation
 
                                 if (!_exit || _QuitWithFlush)
                                 {
-
+                                    
                                     _handled.Add(logLine);
 
-                                    StringBuilder stringBuilder = new StringBuilder();
+                                     StringBuilder stringBuilder = new StringBuilder();
 
-                                    if ((DateTime.Now - _curDate).Days != 0)
-                                    {
+                                     if ((DateTime.Now - _curDate).Days != 0)
+                                     {
                                         _curDate = DateTime.Now;
-
                                         _writer = File.AppendText(@"C:\LogTest\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
-
+                                        
                                         _writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
 
                                         stringBuilder.Append(Environment.NewLine);
@@ -76,16 +85,17 @@ namespace LogComponent.Implementation
                                         _writer.Write(stringBuilder.ToString());
 
                                         _writer.AutoFlush = true;
-                                    }
+                                     }
 
-                                    stringBuilder.Append(logLine.Timestamp.ToString("yyyy-MM-dd HH:mm:ss:fff"));
-                                    stringBuilder.Append("\t");
-                                    stringBuilder.Append(logLine.LineText());
-                                    stringBuilder.Append("\t");
+                                     stringBuilder.Append(logLine.Timestamp.ToString("yyyy-MM-dd HH:mm:ss:fff"));
+                                     stringBuilder.Append("\t");
+                                     stringBuilder.Append(logLine.LineText());
+                                     stringBuilder.Append("\t");
 
-                                    stringBuilder.Append(Environment.NewLine);
+                                     stringBuilder.Append(Environment.NewLine);
 
-                                    _writer.Write(stringBuilder.ToString());
+                                    _writer.Write
+                                    (stringBuilder.ToString());
                                 }
                             }
                         }
@@ -117,6 +127,15 @@ namespace LogComponent.Implementation
                 }
                 catch (Exception ex) { }
             }
+
+            CloseStreamWritter();
+        }
+
+
+        public void CloseStreamWritter()
+        {
+            this._writer.Dispose();
+            GC.SuppressFinalize(this);
         }
 
 
@@ -126,15 +145,18 @@ namespace LogComponent.Implementation
             _runThread.Start();
         }
 
+
         public void StopWithoutFlush()
         {
             _exit = true;
         }
 
+
         public void StopWithFlush()
         {
             _QuitWithFlush = true;
         }
+
 
         private void AddLogLine(string text)
         {
@@ -146,7 +168,8 @@ namespace LogComponent.Implementation
             }
         }
 
-        public void AddLinesDecreaseCount(string logMessage, int rowCount)
+
+        public void AddLinesDecreaseCount(string logMessage, int rowCount = 50)
         {
             for (int i = rowCount; i > 0; i--)
             {
@@ -154,7 +177,8 @@ namespace LogComponent.Implementation
             }
         }
 
-        public void AddLinesIncreaseCount(string logMessage, int rowCount)
+
+        public void AddLinesIncreaseCount(string logMessage, int rowCount = 14)
         {
             for (int i = 0; i < rowCount; i++)
             {

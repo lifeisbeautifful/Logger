@@ -1,4 +1,6 @@
-﻿namespace LogComponent.Abstract
+﻿using LogComponent.Implementation;
+
+namespace LogComponent.Abstract
 {
     /// <summary>
     /// Created ILoggerCreator interface to implement Factory method pattern for creating loggers.
@@ -9,6 +11,6 @@
         /// Returns instance of ILog.
         /// </summary>
         /// <returns></returns>
-        ILog CreateLogger();
+        ILog CreateLogger(DateProvider provider);
     }
 }

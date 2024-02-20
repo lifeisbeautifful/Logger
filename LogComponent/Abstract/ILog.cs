@@ -9,6 +9,12 @@
 
 
         /// <summary>
+        /// Calls dispose method to close the stream.
+        /// </summary>
+        void CloseStreamWritter();
+
+
+        /// <summary>
         /// Stop the logging. If any outstadning logs theses will not be written to Log.
         /// </summary>
         void StopWithoutFlush();

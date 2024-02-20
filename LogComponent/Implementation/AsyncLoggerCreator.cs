@@ -8,9 +8,9 @@ namespace LogComponent.Implementation
     /// </summary>
     public class AsyncLoggerCreator : ILoggerCreator
     {
-        public ILog CreateLogger()
+        public ILog CreateLogger(DateProvider provider)
         {
-            return new AsyncLog();
+            return new AsyncLog(provider);
         }
     }
 }
