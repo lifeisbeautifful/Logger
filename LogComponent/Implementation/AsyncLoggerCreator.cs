@@ -8,9 +8,18 @@ namespace LogComponent.Implementation
     /// </summary>
     public class AsyncLoggerCreator : ILoggerCreator
     {
-        public ILog CreateLogger(DateProvider provider)
+        private readonly ILog _logger;
+        private readonly DateProvider _dateProvider;
+
+        public AsyncLoggerCreator(ILog logger, DateProvider provider)
         {
-            return new AsyncLog(provider);
+            _logger = logger;
+            _dateProvider = provider;
+        }
+
+        public ILog CreateLogger()
+        {
+            return _logger;
         }
     }
 }

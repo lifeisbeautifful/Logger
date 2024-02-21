@@ -32,12 +32,13 @@ namespace LogComponent.Implementation
 
             _curDate = _dateProvider.Now;
 
-            _writer = File.AppendText(dirPath + @"\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
+            CreateLogFile();
 
-            _writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
+            //_writer = File.AppendText(dirPath + @"\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
 
-            _writer.AutoFlush = true;
+            //_writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
 
+            //_writer.AutoFlush = true;
         }
 
        
@@ -62,13 +63,12 @@ namespace LogComponent.Implementation
                                 f++;
 
                                 if (f > 5)
-                                {
                                     continue;
-                                }
+                                
 
                                 if (!_exit || _QuitWithFlush)
                                 {
-                                    
+ 
                                     _handled.Add(logLine);
 
                                      StringBuilder stringBuilder = new StringBuilder();
@@ -76,51 +76,16 @@ namespace LogComponent.Implementation
                                      if ((DateTime.Now - _curDate).Days != 0)
                                      {
                                         _curDate = DateTime.Now;
-                                        _writer = File.AppendText(@"C:\LogTest\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
-                                        
-                                        _writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
-
-                                        stringBuilder.Append(Environment.NewLine);
-
-                                        _writer.Write(stringBuilder.ToString());
-
-                                        _writer.AutoFlush = true;
+                                        CreateLogFile();
                                      }
 
-                                     stringBuilder.Append(logLine.Timestamp.ToString("yyyy-MM-dd HH:mm:ss:fff"));
-                                     stringBuilder.Append("\t");
-                                     stringBuilder.Append(logLine.LineText());
-                                     stringBuilder.Append("\t");
-
-                                     stringBuilder.Append(Environment.NewLine);
-
-                                    _writer.Write
-                                    (stringBuilder.ToString());
+                                    WriteDataToFile(logLine, stringBuilder);
                                 }
                             }
                         }
 
-
-                        for (int y = 0; y < _handled.Count; y++)
-                        {
-                            //Limit access, so the list of lines can be accessible only for 
-                            //one thread at once.
-                            lock (_lines)
-                            {
-                                _lines.Remove(_handled[y]);
-                            }
-                        }
-
-                        //Limit access, so the list of lines can be accessible only for 
-                        //one thread at once.
-                        lock (_lines)
-                        {
-                            if (_QuitWithFlush == true && _lines.Count == 0)
-                            {
-                                _exit = true;
-                            }
-
-                        }
+                        DeleteLoggedDataFromLogList(_handled);
+                        CheckIfLoggingIsFinished();
 
                         Thread.Sleep(50);
                     }
@@ -128,11 +93,12 @@ namespace LogComponent.Implementation
                 catch (Exception ex) { }
             }
 
-            CloseStreamWritter();
+            CloseLogWritter();
         }
 
 
-        public void CloseStreamWritter()
+ 
+        public void CloseLogWritter()
         {
             this._writer.Dispose();
             GC.SuppressFinalize(this);
@@ -158,17 +124,6 @@ namespace LogComponent.Implementation
         }
 
 
-        private void AddLogLine(string text)
-        {
-            //Limit access, so the list of lines can be accessible only for 
-            //one thread at once.
-            lock (_lines)
-            {
-                _lines.Add(new LogLine() { Text = text, Timestamp = DateTime.Now });
-            }
-        }
-
-
         public void AddLinesDecreaseCount(string logMessage, int rowCount = 50)
         {
             for (int i = rowCount; i > 0; i--)
@@ -183,6 +138,89 @@ namespace LogComponent.Implementation
             for (int i = 0; i < rowCount; i++)
             {
                 AddLogLine(logMessage + i.ToString());
+            }
+        }
+
+
+        /// <summary>
+        /// Set exit criteria for logging loop to true if logline list is empty
+        /// and StopWithFlush method was called.
+        /// </summary>
+        private void CheckIfLoggingIsFinished()
+        {
+            //Limit access, so the list of lines can be accessible only for 
+            //one thread at once.
+            lock (_lines)
+            {
+                if (_QuitWithFlush == true && _lines.Count == 0)
+                {
+                    _exit = true;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Delete already written to log file data from logline list.
+        /// </summary>
+        /// <param name="loggedLines">List with already logged lines.</param>
+        private void DeleteLoggedDataFromLogList(List<LogLine> loggedLines)
+        {
+            for (int y = 0; y < loggedLines.Count; y++)
+            {
+                //Limit access, so the list of lines can be accessible only for 
+                //one thread at once.
+                lock (_lines)
+                {
+                    _lines.Remove(loggedLines[y]);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Writes log line with timestamp to file.
+        /// </summary>
+        /// <param name="logLine">List of lines with not logged yet data.</param>
+        /// <param name="stringBuilder">object to build appropriate(with all needed info) line for logging.</param>
+        private void WriteDataToFile(LogLine logLine, StringBuilder stringBuilder)
+        {
+            stringBuilder.Append(logLine.Timestamp.ToString("yyyy-MM-dd HH:mm:ss:fff"));
+            stringBuilder.Append("\t");
+            stringBuilder.Append(logLine.LineText());
+            stringBuilder.Append("\t");
+
+            stringBuilder.Append(Environment.NewLine);
+
+            _writer.Write
+            (stringBuilder.ToString());
+        }
+
+
+        /// <summary>
+        /// Creates new file with predefined name and header.
+        /// </summary>
+        private void CreateLogFile()
+        {
+            _writer = File.AppendText(@"C:\LogTest\Log" + DateTime.Now.ToString("yyyyMMdd HHmmss fff") + ".log");
+
+            _writer.Write("Timestamp".PadRight(25, ' ') + "\t" + "Data".PadRight(15, ' ') + "\t" + Environment.NewLine);
+            _writer.AutoFlush = true;
+        }
+
+
+        /// <summary>
+        /// Creates new logline with text from param and current date & time.
+        /// Addes those line to logLine list.
+        /// </summary>
+        /// <param name="text">Text which should be included into log line.</param>
+        private void AddLogLine(string text)
+        {
+            //Limit access, so the list of lines can be accessible only for 
+            //one thread at once.
+            lock (_lines)
+            {
+                _lines.Add(new LogLine() { Text = text, Timestamp = DateTime.Now });
             }
         }
     }

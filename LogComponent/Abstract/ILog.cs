@@ -9,9 +9,9 @@
 
 
         /// <summary>
-        /// Calls dispose method to close the stream.
+        /// Calls dispose method to close the stream writter.
         /// </summary>
-        void CloseStreamWritter();
+        void CloseLogWritter();
 
 
         /// <summary>

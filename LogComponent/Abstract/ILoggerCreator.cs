@@ -11,6 +11,6 @@ namespace LogComponent.Abstract
         /// Returns instance of ILog.
         /// </summary>
         /// <returns></returns>
-        ILog CreateLogger(DateProvider provider);
+        ILog CreateLogger();
     }
 }

@@ -17,8 +17,7 @@ namespace LogUsers
 
             var serviceProvider = collection.BuildServiceProvider();
 
-            var asyncLogForIncreaseLoop = serviceProvider.GetRequiredService<ILoggerCreator>()
-                                                         .CreateLogger(serviceProvider.GetRequiredService<DateProvider>());                                     
+            var asyncLogForIncreaseLoop = serviceProvider.GetRequiredService<ILoggerCreator>().CreateLogger();                                     
             asyncLogForIncreaseLoop.StartLogging();
 
 
@@ -27,20 +26,17 @@ namespace LogUsers
             ThreadPool.QueueUserWorkItem(item => asyncLogForIncreaseLoop.AddLinesIncreaseCount("Number with Flush: "));
 
 
-            var asyncLogForDecreaseLoop = serviceProvider.GetRequiredService<ILoggerCreator>()
-                                                         .CreateLogger(serviceProvider.GetRequiredService<DateProvider>());
+            var asyncLogForDecreaseLoop = serviceProvider.GetRequiredService<ILoggerCreator>().CreateLogger();
             asyncLogForDecreaseLoop.StartLogging();
 
             // Satisfy demands 1: execute write call asynchroniously, use if we
             //don`t need to start logging immediately.
-            var startLog = new Task(() => asyncLogForDecreaseLoop.AddLinesDecreaseCount("Number with No flush: ", 400));
+            var startLog = new Task(() => asyncLogForDecreaseLoop.AddLinesDecreaseCount("Number with No flush: "));
             startLog.Start();
 
             
-            //Thread.Sleep(1000);
             asyncLogForIncreaseLoop.StopWithoutFlush();
             asyncLogForDecreaseLoop.StopWithFlush();
-            //Console.ReadLine();
         }
     }
 }

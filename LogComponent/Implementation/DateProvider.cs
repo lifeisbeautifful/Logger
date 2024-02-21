@@ -1,5 +1,4 @@
-﻿using System;
-namespace LogComponent.Implementation
+﻿namespace LogComponent.Implementation
 {
     public class DateProvider
     {

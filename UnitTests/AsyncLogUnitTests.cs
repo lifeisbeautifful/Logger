@@ -27,7 +27,7 @@ namespace UnitTests
         public void AsyncLogInstanceCreatesDir()
         {
             ILog logger = new AsyncLog(_dateProvider);
-            logger.CloseStreamWritter();
+            logger.CloseLogWritter();
 
             Assert.That(Directory.Exists(folderPath), "Directory was not created"); 
         }
@@ -36,7 +36,7 @@ namespace UnitTests
         public void AsyncLogInstanceCreatesFile()
         {
             ILog logger = new AsyncLog(_dateProvider);
-            logger.CloseStreamWritter();
+            logger.CloseLogWritter();
 
             var logFile = Directory.GetFiles(folderPath);
             var file = File.ReadAllTextAsync(logFile.First());
@@ -44,7 +44,7 @@ namespace UnitTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(logFile.Count(), Is.EqualTo(1), "log files quantity are not as expected after create a looger");
+                Assert.That(logFile.Count(), Is.EqualTo(1), "Log files quantity are not as expected after create a looger");
                 Assert.That(File.Exists(logFile.First()), "Expected file was not created");
                 Assert.That(file.Result.Contains("Timestamp"), "Timestamp column is not present in file context");
                 Assert.That(file.Result.Contains("Data"), "Data column is not present in file context");
